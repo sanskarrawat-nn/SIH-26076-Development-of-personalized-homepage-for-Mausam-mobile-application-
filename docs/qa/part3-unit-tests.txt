@@ -1,0 +1,31 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> mausam-setu@3.0.0 test
+> node --test tests/*.test.js
+
+✔ unit conversion and unavailable inputs (8.953203ms)
+✔ offline removes expired advice and marks cached metrics (6.133501ms)
+✔ offline expires future advisories when the source snapshot is too old (13.801469ms)
+✔ all map layers retain coordinates and the correct product (6.233932ms)
+✔ environment categories preserve missing values and boundaries (0.450687ms)
+✔ assistant answers the requested day and refuses another city (221.592864ms)
+✔ assistant never invents unavailable or incomplete weather (5.924343ms)
+✔ voice navigation is a bounded action and unsupported intent gets help (1.803223ms)
+✔ Hindi catalog translates core controls and answer templates (18.469552ms)
+✔ expired offline risk cannot retain emergency state (1.91881ms)
+✔ learning is bounded, time-aware and can be disabled or reset (9.883571ms)
+✔ notification consent, dedup, cooldown, category and demo checks (2.456562ms)
+✔ new personas and valid schedule preferences survive reload (14.166769ms)
+✔ foreground dispatch serializes batches and prioritizes official warnings (2.521026ms)
+✔ Hindi tomorrow-morning query uses the specific day window, not today (84.219312ms)
+✔ malformed learned records cannot inject unknown personas or nonnumeric weights (2.289071ms)
+✔ corrupted preferences are repaired before API requests (8.046542ms)
+✔ snow showers and missing weather values remain distinct (1.754417ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 18
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1086.319094

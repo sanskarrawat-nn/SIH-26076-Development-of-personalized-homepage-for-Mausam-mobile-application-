@@ -1,0 +1,12 @@
+{
+  "status": "live",
+  "source": "NOAA Aviation Weather Center",
+  "reports": [
+    {
+      "type": "METAR",
+      "text": "METAR VILK 250500Z 05010KT 3500 DZ SCT008 BKN018 OVC090 23/22 Q1007 BECMG 3000 RA",
+      "valid": "2026-09-25T05:00:00+00:00"
+    }
+  ],
+  "message": "METAR describes recent conditions; TAF is included only when it covers the selected time. No flight-delay or cancellation status is inferred."
+}

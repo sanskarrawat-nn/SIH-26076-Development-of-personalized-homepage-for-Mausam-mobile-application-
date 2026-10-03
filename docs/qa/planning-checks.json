@@ -1,0 +1,12 @@
+{
+  "passed": [
+    "Unsaved planning input survives background weather refresh",
+    "Activity duration, sensitivities, school times, event comfort and sourced planting preferences apply",
+    "Planning preferences persist on device",
+    "Journey endpoint forecasts and explicit simulated traffic",
+    "Flight planner handles missing airport data and clears stale results",
+    "Tide demo timetable is functional and labelled",
+    "Expanded planning, journey and tide sections fit 390px and 200% text"
+  ],
+  "errors": []
+}

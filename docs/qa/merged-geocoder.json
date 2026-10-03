@@ -1,0 +1,84 @@
+{
+  "226001": {
+    "error": "ReadTimeout"
+  },
+  "Hazratganj": [
+    {
+      "name": "Hazratganj, Lucknow, Uttar Pradesh",
+      "latitude": 26.8475285,
+      "longitude": 80.9432003,
+      "country": "India",
+      "timezone": "Asia/Kolkata"
+    },
+    {
+      "name": "Hazratganj, Lucknow, Uttar Pradesh, 226027",
+      "latitude": 26.854809,
+      "longitude": 80.9447594,
+      "country": "India",
+      "timezone": "Asia/Kolkata"
+    },
+    {
+      "name": "Hazratganj, Lucknow, Uttar Pradesh, 226027",
+      "latitude": 26.8500335,
+      "longitude": 80.9415944,
+      "country": "India",
+      "timezone": "Asia/Kolkata"
+    },
+    {
+      "name": "Hazratganj Chauraha, Lucknow, Hazratganj, Uttar Pradesh, 226027",
+      "latitude": 26.8467594,
+      "longitude": 80.9461045,
+      "country": "India",
+      "timezone": "Asia/Kolkata"
+    },
+    {
+      "name": "Omaxe Mini Hazratganj, Ahmamau, Uttar Pradesh, 226030",
+      "latitude": 26.8113944,
+      "longitude": 80.9963211,
+      "country": "India",
+      "timezone": "Asia/Kolkata"
+    },
+    {
+      "name": "Omaxe Hazratganj, Lucknow, Ahmamau, Uttar Pradesh, 226002",
+      "latitude": 26.8117174,
+      "longitude": 80.997638,
+      "country": "India",
+      "timezone": "Asia/Kolkata"
+    },
+    {
+      "name": "Hazratganj Police Station, Lucknow, Hazratganj, Uttar Pradesh, 226027",
+      "latitude": 26.8471889,
+      "longitude": 80.9460958,
+      "country": "India",
+      "timezone": "Asia/Kolkata"
+    },
+    {
+      "name": "Hazratganj Metro Station, Lucknow, Hazratganj, Uttar Pradesh, 226027",
+      "latitude": 26.849451,
+      "longitude": 80.9426039,
+      "country": "India",
+      "timezone": "Asia/Kolkata"
+    },
+    {
+      "name": "Hazratganj Market, Lucknow, Hazratganj, Uttar Pradesh, 226001",
+      "latitude": 26.8473939,
+      "longitude": 80.9463916,
+      "country": "India",
+      "timezone": "Asia/Kolkata"
+    },
+    {
+      "name": "Indian Coffee House, Lucknow, Hazratganj, Uttar Pradesh, 226027",
+      "latitude": 26.8473348,
+      "longitude": 80.9463676,
+      "country": "India",
+      "timezone": "Asia/Kolkata"
+    }
+  ],
+  "reverse": {
+    "name": "Good Rates, no comission, Lucknow, Hazratganj, Uttar Pradesh, 226001",
+    "latitude": 26.85,
+    "longitude": 80.95,
+    "country": "India",
+    "timezone": "Asia/Kolkata"
+  }
+}

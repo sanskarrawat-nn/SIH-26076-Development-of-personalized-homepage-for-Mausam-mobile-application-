@@ -1,0 +1,14 @@
+{
+  "version": "3.0.0",
+  "all_final_command_exit_codes": 0,
+  "backend_tests": 150,
+  "frontend_tests": 18,
+  "grouped_browser_offline_checks": 47,
+  "risk_policy_unchanged_from_part2": true,
+  "safety_engine_unchanged_from_part2": true,
+  "live_official_feeds_configured": false,
+  "public_deployment_performed": false,
+  "external_map_test_transport": "explicit fixture",
+  "visual_baseline": "delivered Part 2",
+  "visual_comparison_screenshots": 14
+}

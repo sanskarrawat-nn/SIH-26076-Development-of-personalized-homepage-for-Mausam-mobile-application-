@@ -1,0 +1,103 @@
+{
+  "checked_at": "2026-09-25T05:12:06.924467+00:00",
+  "timeout_seconds": 25,
+  "results": [
+    {
+      "provider": "weather",
+      "status": "estimated",
+      "hours": 158,
+      "days": 7,
+      "temperature": 24.3
+    },
+    {
+      "provider": "soil",
+      "metrics": {
+        "soil_moisture": {
+          "value": 0.366,
+          "status": "estimated",
+          "valid_at": "2026-09-25T05:00:00+00:00"
+        },
+        "soil_moisture_root": {
+          "value": 0.363,
+          "status": "estimated",
+          "valid_at": "2026-09-25T05:00:00+00:00"
+        }
+      }
+    },
+    {
+      "provider": "air",
+      "metrics": {
+        "aqi": {
+          "value": 43.0,
+          "status": "estimated",
+          "valid_at": "2026-09-25T05:00:00+00:00"
+        },
+        "pm25": {
+          "value": 6.5,
+          "status": "estimated",
+          "valid_at": "2026-09-25T05:00:00+00:00"
+        },
+        "pm10": {
+          "value": 6.5,
+          "status": "estimated",
+          "valid_at": "2026-09-25T05:00:00+00:00"
+        }
+      }
+    },
+    {
+      "provider": "marine",
+      "metrics": {
+        "wave_height": {
+          "value": 1.1,
+          "status": "estimated",
+          "valid_at": "2026-09-25T05:00:00+00:00"
+        },
+        "wave_period": {
+          "value": 7.05,
+          "status": "estimated",
+          "valid_at": "2026-09-25T05:00:00+00:00"
+        },
+        "water_temperature": {
+          "value": 28.2,
+          "status": "estimated",
+          "valid_at": "2026-09-25T05:00:00+00:00"
+        }
+      }
+    },
+    {
+      "provider": "pollen",
+      "metrics": {
+        "aqi": {
+          "value": 27.0,
+          "status": "estimated",
+          "valid_at": "2026-09-25T05:00:00+00:00"
+        },
+        "pm25": {
+          "value": 6.2,
+          "status": "estimated",
+          "valid_at": "2026-09-25T05:00:00+00:00"
+        },
+        "pm10": {
+          "value": 13.7,
+          "status": "estimated",
+          "valid_at": "2026-09-25T05:00:00+00:00"
+        },
+        "grass_pollen": {
+          "value": 0.0,
+          "status": "estimated",
+          "valid_at": "2026-09-25T05:00:00+00:00"
+        },
+        "birch_pollen": {
+          "value": 0.0,
+          "status": "estimated",
+          "valid_at": "2026-09-25T05:00:00+00:00"
+        },
+        "alder_pollen": {
+          "value": 0.0,
+          "status": "estimated",
+          "valid_at": "2026-09-25T05:00:00+00:00"
+        }
+      }
+    }
+  ]
+}

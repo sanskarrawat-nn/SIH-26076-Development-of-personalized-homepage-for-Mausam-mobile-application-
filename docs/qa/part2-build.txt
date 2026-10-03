@@ -1,0 +1,13 @@
+
+> mausam-personal@2.2.0 build
+> vite build && node scripts/build-sw.mjs
+
+vite v6.4.3 building for production...
+transforming...
+✓ 1617 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.66 kB │ gzip:   0.41 kB
+dist/assets/index-0sNYHopc.css   42.07 kB │ gzip:  10.00 kB
+dist/assets/index-D5dVObh4.js   398.48 kB │ gzip: 118.84 kB
+✓ built in 1.76s

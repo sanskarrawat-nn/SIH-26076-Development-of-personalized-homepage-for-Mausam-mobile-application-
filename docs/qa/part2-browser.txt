@@ -1,0 +1,18 @@
+
+> mausam-personal@2.2.0 test:browser
+> node tests/browser.mjs
+
+{
+  "passed": [
+    "Five-step onboarding completed",
+    "Judge mode, merged interests, window and ranking explanation",
+    "Travel rain generates umbrella recommendation",
+    "Agriculture scenario reports 18 mm",
+    "No-data state has no fabricated recommendations",
+    "Saved locations persist in browser",
+    "Imperial units and per-metric source details",
+    "390px mobile layout and daily forecast, no page overflow",
+    "200% base text sizing without page overflow"
+  ],
+  "errors": []
+}

@@ -1,0 +1,26 @@
+{
+  "passed": [
+    "Branding; no external map before explorer opens",
+    "Expanded plans at ten widths and mobile 200% text",
+    "Map automatic load, seven layers, location recentering and ten modal widths",
+    "Map offline/reconnect and timeout/retry",
+    "Persona change reorders actual DOM sections",
+    "Storm safety override and expandable emergency dashboard",
+    "Hindi controls, risk and grounded tomorrow-rain answer",
+    "Independent accessibility controls, navigation intent and keyboard dismissal"
+  ],
+  "widths": [
+    360,
+    390,
+    412,
+    768,
+    1024,
+    1280,
+    1366,
+    1440,
+    1536,
+    1920
+  ],
+  "errors": [],
+  "externalMap": "Mocked transport; actual Windy layers not verified"
+}

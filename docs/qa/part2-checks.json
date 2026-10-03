@@ -1,0 +1,13 @@
+{
+  "checks": [
+    "Student and Highland modules integrated into the dynamic homepage",
+    "Useful feedback persists and reset clears learned weights",
+    "Low Data Mode suppresses heavy map; normal intentional opening auto-loads",
+    "Community demo markers, detail panel and explicit local review state",
+    "Saved plan automatically evaluates complete event duration",
+    "Mobile and desktop layout: 360, 390, 768, 1440, 1920 pixels",
+    "Emergency safety override remains first",
+    "Mobile report form, private receipt, cached community fallback and expiry (mocked transport)"
+  ],
+  "errors": []
+}

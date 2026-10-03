@@ -1,0 +1,17 @@
+{
+  "before": "Part 2 archive",
+  "after": "Part 3 working tree",
+  "viewports": [
+    "1440x1000",
+    "390x844"
+  ],
+  "states": [
+    "home",
+    "recommendations",
+    "explanation",
+    "map",
+    "preferences",
+    "emergency"
+  ],
+  "errors": []
+}

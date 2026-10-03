@@ -1,0 +1,72 @@
+{
+  "postcode_retry": [
+    {
+      "name": "226001, Uttar Pradesh",
+      "latitude": 26.862188297468354,
+      "longitude": 80.91135206835443,
+      "country": "India",
+      "timezone": "Asia/Kolkata"
+    },
+    {
+      "name": "Indian Bank, Lucknow, Chowk, Uttar Pradesh, 226001",
+      "latitude": 26.8654079,
+      "longitude": 80.9097279,
+      "country": "India",
+      "timezone": "Asia/Kolkata"
+    },
+    {
+      "name": "Akashvani, Lucknow, Ganesh Ganj, Uttar Pradesh, 226001",
+      "latitude": 26.8413955,
+      "longitude": 80.9402623,
+      "country": "India",
+      "timezone": "Asia/Kolkata"
+    }
+  ],
+  "weather": {
+    "pressure": {
+      "value": 983.3,
+      "unit": "hPa",
+      "source": "Open-Meteo / best_match (weather model)",
+      "retrieved_at": "2026-09-26T09:02:31.221900Z",
+      "valid_at": "2026-09-26T08:30:00Z",
+      "location": {
+        "name": "Lucknow",
+        "latitude": 26.8467,
+        "longitude": 80.9462,
+        "country": "India",
+        "timezone": "Asia/Kolkata"
+      },
+      "status": "estimated"
+    },
+    "dew_point": {
+      "value": 24.6,
+      "unit": "\u00b0C",
+      "source": "Open-Meteo / best_match (weather model)",
+      "retrieved_at": "2026-09-26T09:02:31.221900Z",
+      "valid_at": "2026-09-26T08:30:00Z",
+      "location": {
+        "name": "Lucknow",
+        "latitude": 26.8467,
+        "longitude": 80.9462,
+        "country": "India",
+        "timezone": "Asia/Kolkata"
+      },
+      "status": "estimated"
+    },
+    "wind_direction": {
+      "value": 106.0,
+      "unit": "\u00b0",
+      "source": "Open-Meteo / best_match (weather model)",
+      "retrieved_at": "2026-09-26T09:02:31.221900Z",
+      "valid_at": "2026-09-26T08:30:00Z",
+      "location": {
+        "name": "Lucknow",
+        "latitude": 26.8467,
+        "longitude": 80.9462,
+        "country": "India",
+        "timezone": "Asia/Kolkata"
+      },
+      "status": "estimated"
+    }
+  }
+}

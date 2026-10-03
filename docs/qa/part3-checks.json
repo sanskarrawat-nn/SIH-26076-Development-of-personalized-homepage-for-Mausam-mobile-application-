@@ -1,0 +1,21 @@
+{
+  "checks": [
+    "Expanded dashboard/forms and Preferences, Accessibility, Ask dialogs at all ten widths; dialog keyboard focus",
+    "Explanation dialog at all ten widths",
+    "Simulated official warning triggers safety override at all ten widths",
+    "Exact SIH Hindi running question receives a forecast-based tomorrow-morning response"
+  ],
+  "errors": [],
+  "widths": [
+    360,
+    390,
+    412,
+    768,
+    1024,
+    1280,
+    1366,
+    1440,
+    1536,
+    1920
+  ]
+}

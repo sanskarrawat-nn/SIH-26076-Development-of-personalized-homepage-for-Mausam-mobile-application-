@@ -1,0 +1,24 @@
+
+> mausam-personal@2.1.0 test
+> node --test tests/*.test.js
+
+✔ unit conversion and unavailable inputs (0.982473ms)
+✔ offline removes expired advice and marks cached metrics (0.811023ms)
+✔ offline expires future advisories when the source snapshot is too old (0.607377ms)
+✔ all map layers retain coordinates and the correct product (1.434845ms)
+✔ environment categories preserve missing values and boundaries (0.207343ms)
+✔ assistant answers the requested day and refuses another city (14.568503ms)
+✔ assistant never invents unavailable or incomplete weather (0.509519ms)
+✔ voice navigation is a bounded action and unsupported intent gets help (0.413084ms)
+✔ Hindi catalog translates core controls and answer templates (2.055392ms)
+✔ expired offline risk cannot retain emergency state (0.436209ms)
+✔ corrupted preferences are repaired before API requests (2.262584ms)
+✔ snow showers and missing weather values remain distinct (0.572473ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 113.858775

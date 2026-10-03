@@ -1,0 +1,15 @@
+
+> mausam-personal@2.2.0 test:merge
+> node tests/merge-browser.mjs
+
+{
+  "passed": [
+    "Clock and advisory inbox work; mark-as-read persists without removing advisories",
+    "Seven map layers, independent provider notice and personal-impact summary",
+    "Map handles offline status and reconnects",
+    "Map units follow preferences; expanded map fits mobile at 200% text",
+    "Detailed PIN-code search selects a result into the shared app location",
+    "Provider-only setting reaches the backend and persists"
+  ],
+  "errors": []
+}

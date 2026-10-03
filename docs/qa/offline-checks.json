@@ -1,0 +1,9 @@
+{
+  "passed": [
+    "Production shell opens offline",
+    "Exact-query last data keeps Demo/Cached label",
+    "Changed preferences never reuse mismatched cached response",
+    "Online retry recovers",
+    "Hindi font and catalogs available offline"
+  ]
+}

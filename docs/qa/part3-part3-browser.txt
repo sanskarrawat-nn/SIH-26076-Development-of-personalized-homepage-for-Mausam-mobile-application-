@@ -1,0 +1,26 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> mausam-setu@3.0.0 test:part3
+> node tests/part3-browser.mjs
+
+{
+  "checks": [
+    "Expanded dashboard/forms and Preferences, Accessibility, Ask dialogs at all ten widths; dialog keyboard focus",
+    "Explanation dialog at all ten widths",
+    "Simulated official warning triggers safety override at all ten widths",
+    "Exact SIH Hindi running question receives a forecast-based tomorrow-morning response"
+  ],
+  "errors": [],
+  "widths": [
+    360,
+    390,
+    412,
+    768,
+    1024,
+    1280,
+    1366,
+    1440,
+    1536,
+    1920
+  ]
+}

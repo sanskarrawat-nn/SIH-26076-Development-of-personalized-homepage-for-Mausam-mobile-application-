@@ -1,0 +1,899 @@
+MASTER DEVELOPMENT PROMPT — MAUSAM SETU
+PART 2 OF 3
+
+Continue from the STABLE Part 1 project.
+
+Do NOT start over.
+
+Do NOT revert:
+
+Mausam Setu branding
+dynamic homepage
+Safety Override
+Emergency Mode
+Weather Risk
+Hindi/i18n
+Ask Mausam
+Accessibility
+UI alignment fixes
+automatic weather map loading
+data provenance
+Providers Only behaviour
+
+First run core tests and verify Part 1 still works.
+
+============================================================
+1. CITIZEN WEATHER REPORTING
+============================================================
+
+Add:
+
+REPORT LOCAL WEATHER
+
+Allow categories such as:
+
+Heavy Rain
+Waterlogging
+Flooding
+Dense Fog
+Hail
+Strong Wind
+Thunderstorm
+Fallen Tree
+Extreme Heat
+Road Blockage
+Coastal Flooding
+
+Report fields:
+
+incident type
+description
+photo
+location/GPS
+timestamp
+
+Suggested model:
+
+report_id
+latitude
+longitude
+approximate_location
+timestamp
+category
+description
+photo
+verification_status
+confidence_score
+expires_at
+
+Mobile-first form.
+
+============================================================
+2. COMMUNITY REPORT VERIFICATION
+============================================================
+
+Reports must not become automatically “verified”.
+
+Create transparent confidence logic.
+
+Possible pipeline:
+
+Report
+↓
+GPS validation
+↓
+Timestamp validation
+↓
+Weather-provider comparison
+↓
+Nearby-report comparison
+↓
+Photo/basic evidence check
+↓
+Confidence
+
+Statuses:
+
+VERIFIED LOCAL REPORT
+COMMUNITY OBSERVATION
+UNVERIFIED REPORT
+EXPIRED REPORT
+
+Do not call community verification “government verified”.
+
+============================================================
+3. COMMUNITY PRIVACY
+============================================================
+
+Never publicly expose:
+
+exact home coordinates
+email
+phone
+identity
+precise address
+
+Use:
+
+coordinate rounding
+approximate location
+distance from viewer
+
+Remove unnecessary EXIF metadata from public image uploads where practical.
+
+============================================================
+4. CONDITIONS AROUND YOU
+============================================================
+
+Create:
+
+CONDITIONS AROUND YOU
+
+Example:
+
+🔴 Waterlogging
+600 m away
+4 reports
+18 min ago
+
+🟠 Dense Fog
+1.4 km away
+2 reports
+12 min ago
+
+🟡 Fallen Tree
+2.1 km away
+1 report
+25 min ago
+
+Combine:
+
+official information
+weather data
+community observations
+user location
+
+Clearly label confidence.
+
+============================================================
+5. COMMUNITY REPORT MAP
+============================================================
+
+Add a map layer for:
+
+Flood
+Fog
+Waterlogging
+Wind
+Hail
+Tree Fall
+Road Blockage
+
+Selecting a marker should show:
+
+category
+approximate location
+time
+description
+verification state
+confidence
+number of confirming reports
+
+Reuse current map system where possible.
+
+Do not create an unnecessary duplicate map framework.
+
+============================================================
+6. STUDENT PERSONA
+============================================================
+
+Add Student as a dedicated persona.
+
+Settings:
+
+school/college start time
+end time
+commute duration
+transport mode
+outdoor activity
+sports/practice time
+
+Recommendations:
+
+Rain expected during usual departure time.
+
+Consider leaving slightly earlier.
+
+Poor AQI overlaps morning commute.
+
+Thunderstorm risk overlaps outdoor practice.
+
+Carry rain protection today.
+
+Integrate Student into:
+
+dynamic homepage
+Weather Risk relevance
+Why This For Me
+Judge Mode
+notifications
+
+============================================================
+7. HILL / HIGHLAND PERSONA
+============================================================
+
+Add Hill/Highland persona.
+
+Use relevant information such as:
+
+fog
+visibility
+rainfall
+rain accumulation
+wind gusts
+frost
+temperature drop
+road weather
+altitude-related conditions where supported
+
+Example:
+
+Visibility may fall below 500 m after 7 PM.
+
+Heavy recent rainfall may increase slope-instability concern.
+
+Do NOT claim landslide prediction unless a validated landslide model actually exists.
+
+============================================================
+8. IMPROVE MARINE / COASTAL PERSONA
+============================================================
+
+Keep:
+
+wave height
+wave period
+sea temperature
+tide framework
+
+Add:
+
+coastal warning priority
+high-wave alerts
+sea-state explanation
+coastal risk score
+tide context
+INCOIS integration interface
+fisherman/coastal activity recommendations
+
+Always label:
+
+LIVE
+ESTIMATED
+DEMO
+UNAVAILABLE
+
+correctly.
+
+============================================================
+9. ROUTE-AWARE WEATHER
+============================================================
+
+Upgrade Journey Planner beyond only origin/destination.
+
+Desired pipeline:
+
+Origin
+↓
+Route geometry
+↓
+Sample intermediate coordinates
+↓
+Estimate ETA at samples
+↓
+Retrieve weather for location/time
+↓
+Detect hazards
+↓
+Journey guidance
+
+Example:
+
+Heavy rain expected near Kanpur around 4:20–5:10 PM.
+
+Dense fog may affect a section of your route.
+
+Use efficient sampling.
+
+Do not make hundreds of unnecessary provider requests.
+
+============================================================
+10. TRAFFIC + WEATHER
+============================================================
+
+If TomTom or another legitimate traffic provider is configured:
+
+use:
+
+distance
+travel time
+traffic delay
+
+Combine with weather.
+
+If traffic provider unavailable:
+
+show:
+
+Traffic data unavailable.
+
+Never fabricate traffic.
+
+============================================================
+11. COMMUTE PERSONALIZATION
+============================================================
+
+Use:
+
+departure
+arrival
+transport mode
+route weather
+rain
+visibility
+wind
+traffic where available
+
+Advice should be cautious.
+
+Examples:
+
+Rain intensity is highest around your normal departure time.
+
+Visibility may improve later in the morning.
+
+Allow additional travel time.
+
+Avoid overly precise unsupported claims.
+
+============================================================
+12. BACKGROUND NOTIFICATIONS
+============================================================
+
+Add architecture for:
+
+Web Push
+PWA notifications
+future Android push
+
+Possible categories:
+
+official warning
+school pickup weather
+fitness heat
+commute rain
+event weather
+journey risk
+
+Examples:
+
+Rain probability increases around your school pickup time.
+
+Your usual workout window is expected to be unusually hot tomorrow.
+
+Heavy rain may affect your commute.
+
+Add:
+
+notification preferences
+cooldowns
+deduplication
+severity filters
+
+Avoid spam.
+
+============================================================
+13. ADAPTIVE PERSONALIZATION
+============================================================
+
+Keep deterministic safety/rule systems.
+
+Add a lightweight preference-learning layer.
+
+Signals may include:
+
+cards opened
+cards dismissed
+Useful
+Not Useful
+frequent metrics
+frequent personas
+time patterns
+preferred activities
+
+Example:
+
+User frequently checks:
+
+AQI
+Commute
+Rain
+
+around 8 AM.
+
+Increase relevant ranking around that time.
+
+Explain:
+
+Shown higher because you frequently check commute conditions around this time.
+
+User must be able to reset learned personalization.
+
+============================================================
+14. FEEDBACK CONTROLS
+============================================================
+
+Add:
+
+👍 Useful
+👎 Not Useful
+
+Optional:
+
+Show more like this
+Show less like this
+
+Feedback changes relevance.
+
+It must not suppress critical warnings.
+
+============================================================
+15. WEATHER-AWARE PLANS
+============================================================
+
+Add reusable user plans.
+
+Examples:
+
+Football practice
+College event
+Wedding
+Outdoor meeting
+Trip
+School trip
+Run
+Walk
+
+Fields:
+
+date
+start time
+duration/end time
+location
+activity
+indoor backup
+
+Automatically evaluate weather.
+
+Example:
+
+Your outdoor event tomorrow at 5 PM overlaps a thunderstorm-risk period.
+
+============================================================
+16. EVENT PLANNER IMPROVEMENTS
+============================================================
+
+Keep current Event Planner.
+
+Add:
+
+event risk
+rain timing
+heat comfort
+UV
+wind
+thunderstorm
+AQI
+visibility
+indoor-backup suggestion
+reminders
+
+Evaluate full event duration.
+
+============================================================
+17. AGRICULTURE IMPROVEMENTS
+============================================================
+
+Keep:
+
+soil moisture
+rain
+frost
+planting calendar
+
+Add architecture for:
+
+crop selection
+growth stage
+rain accumulation
+heat stress
+irrigation timing guidance
+spraying-weather suitability
+wind suitability
+humidity
+agriculture advisory integration
+
+Avoid unvalidated exact pesticide/irrigation quantity recommendations.
+
+============================================================
+18. HEALTH IMPROVEMENTS
+============================================================
+
+Keep:
+
+AQI
+PM2.5
+PM10
+UV
+humidity
+heat
+pollen
+
+Improve:
+
+exposure categories
+time windows
+sensitivity-aware thresholds
+AQI scale clarity
+
+Do not diagnose disease.
+
+Use cautious language.
+
+============================================================
+19. FITNESS IMPROVEMENTS
+============================================================
+
+Keep best-window analysis.
+
+Improve using:
+
+activity
+intensity
+duration
+temperature
+feels-like
+humidity
+wind
+rain
+UV
+AQI
+visibility
+daylight
+route conditions where available
+
+Explain:
+
+Why this is the best window.
+
+============================================================
+20. FAMILY IMPROVEMENTS
+============================================================
+
+Keep school pickup/drop-off.
+
+Add:
+
+child outdoor play window
+school commute weather
+AQI around school timing
+rain reminder
+severe-weather safety card
+
+Integrate notifications.
+
+============================================================
+21. TRAVEL IMPROVEMENTS
+============================================================
+
+Keep packing recommendations.
+
+Add:
+
+destination comparison
+origin weather
+destination weather
+route weather
+destination risk
+airport conditions
+packing checklist
+weather difference between origin/destination
+
+============================================================
+22. AVIATION SAFETY
+============================================================
+
+Keep:
+
+METAR
+TAF
+
+Do not claim:
+
+flight delay prediction
+flight cancellation prediction
+airline operational status
+
+unless real operational data is connected.
+
+Label as:
+
+Airport Weather
+
+============================================================
+23. TIDE CORRECTION
+============================================================
+
+Clearly distinguish:
+
+LIVE TIDE
+DEMO TIDE
+UNAVAILABLE
+
+If live provider missing:
+
+Live tide data unavailable.
+
+Never disguise demo tide as live.
+
+============================================================
+24. POLLEN CORRECTION
+============================================================
+
+When unsupported:
+
+Pollen data unavailable for this location.
+
+No fabricated values.
+
+============================================================
+25. LOW-DATA MODE
+============================================================
+
+Add Low Data Mode.
+
+When enabled:
+
+text-first UI
+no automatic heavy map loading
+fewer animations
+smaller background activity
+cached data reuse
+reduced image usage
+fewer unnecessary API requests
+
+Safety information must remain available.
+
+============================================================
+26. EXPANDED OFFLINE MODE
+============================================================
+
+Cache where practical:
+
+last weather
+critical alerts
+preferences
+saved places
+recent places
+important recommendations
+emergency guidance
+previously downloaded community reports
+
+Always show:
+
+OFFLINE
+Last updated: ...
+
+Never show cached data as LIVE.
+
+============================================================
+27. SHORT-TERM / NOWCAST-LIKE EXPERIENCE
+============================================================
+
+Where real provider data supports it:
+
+short-term precipitation
+near-term weather changes
+rapidly changing conditions
+
+Do not label it “Official IMD Nowcast” unless it is genuinely IMD data.
+
+============================================================
+28. SHARE SAFETY ALERT
+============================================================
+
+Add:
+
+Share Alert
+
+Shareable content:
+
+warning
+location
+expected period
+short recommended action
+source
+
+Useful for:
+
+WhatsApp
+SMS
+system share sheet
+
+============================================================
+29. EMERGENCY CONTACTS
+============================================================
+
+Create emergency-contact section.
+
+Support:
+
+configured official contacts
+saved family contact
+verified local emergency contacts
+
+Do not hardcode uncertain numbers.
+
+============================================================
+30. PRIVACY CONTROLS
+============================================================
+
+Allow users to:
+
+clear recent locations
+clear saved data where appropriate
+reset adaptive personalization
+disable adaptive personalization
+control notifications
+control location use
+delete local profile/preferences
+
+============================================================
+31. COMMUNITY INFORMATION PRIORITY
+============================================================
+
+Use evidence hierarchy conceptually like:
+
+Official Warning
+>
+Strong provider evidence
+>
+Verified community evidence
+>
+Unverified observation
+
+Community data may affect relevance, but must not impersonate official warnings.
+
+============================================================
+32. DYNAMIC HOMEPAGE INTEGRATION
+============================================================
+
+All new modules must integrate with Part 1’s dynamic homepage.
+
+Do not create disconnected mini-apps unless a dedicated tool page is genuinely appropriate.
+
+============================================================
+33. JUDGE MODE EXPANSION
+============================================================
+
+Add deterministic scenarios where implemented:
+
+Student Commute
+Hill Fog
+Community Flood Report
+Verified Community Report
+Route Heavy Rain
+Emergency Mode
+Severe AQI
+Hindi Voice Example
+
+Always show:
+
+DEMO / JUDGE MODE
+
+============================================================
+34. MAINTAIN UI ALIGNMENT SYSTEM
+============================================================
+
+All new Part 2 cards/components must use the same spacing/alignment system fixed in Part 1.
+
+Do not reintroduce:
+
+clipped icons
+negative offsets
+horizontal overflow
+misaligned nested cards
+
+Community
+Student
+Hill
+Route Weather
+Notifications
+Adaptive Personalization
+
+must visually match existing Mausam Setu design.
+
+============================================================
+35. MAINTAIN WEATHER MAP AUTO-LOAD
+============================================================
+
+Do not reintroduce:
+
+Load interactive map
+
+The external weather map should still load automatically after intentional opening.
+
+Community map layers should integrate without breaking existing weather map behaviour.
+
+============================================================
+PART 2 TESTING
+============================================================
+
+Test:
+
+community creation
+community confidence
+expiration
+coordinate privacy
+Student persona
+Hill persona
+Marine improvements
+route sampling
+ETA/weather matching
+traffic unavailable state
+notification deduplication
+adaptive weighting
+feedback reset
+plans
+event logic
+offline state
+tide labels
+pollen unavailable
+dynamic homepage integration
+new UI alignment
+Judge Mode scenarios
+
+Run:
+
+backend tests
+frontend tests
+production build
+
+Test mobile and desktop.
+
+============================================================
+PART 2 COMPLETION REPORT
+============================================================
+
+Provide:
+
+IMPLEMENTED
+
+PARTIAL
+
+EXTERNAL DEPENDENCIES
+
+API KEYS REQUIRED
+
+TEST RESULTS
+
+BUILD RESULTS
+
+FILES CHANGED
+
+KNOWN LIMITATIONS
+
+CONFIRM PART 1 FEATURES STILL WORK
+
+Then state:
+
+“Ready for PART 3 — Final Integration, Optimization, Deployment and SIH Readiness.”
