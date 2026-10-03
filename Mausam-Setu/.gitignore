@@ -1,0 +1,27 @@
+.env
+.env.*
+!.env.example
+node_modules/
+dist/
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.db
+*.db-*
+.pytest_cache/
+playwright-report/
+test-results/
+.DS_Store
+
+# Local outputs and submission archive
+build/
+.ruff_cache/
+.cache/
+.mypy_cache/
+coverage/
+*.log
+*.tmp
+*.sqlite
+*.sqlite3
+mausam-setu-submission.zip

@@ -1,0 +1,1164 @@
+MASTER DEVELOPMENT PROMPT — MAUSAM SETU
+PART 1 OF 3
+
+You are continuing development of my EXISTING SIH 2026 project.
+
+NEW FINAL APP NAME:
+Mausam Setu
+
+Problem Statement ID:
+SIH26076
+
+Problem Statement:
+Development of Personalized Homepage for ‘Mausam’ Mobile Application
+
+Theme:
+Smart Automation
+
+============================================================
+VERY IMPORTANT
+============================================================
+
+This is NOT a new project.
+
+DO NOT rebuild the application from scratch.
+
+DO NOT replace working architecture unnecessarily.
+
+DO NOT remove existing working features.
+
+First inspect the COMPLETE existing codebase before implementing anything.
+
+Understand:
+
+frontend
+backend
+database
+weather APIs/providers
+recommendation engine
+personalization logic
+personas
+state management
+PWA
+offline system
+service worker
+Judge Mode
+weather map
+user preferences
+caching
+tests
+environment variables
+deployment configuration
+
+Reuse existing modules whenever possible.
+
+Avoid duplicate engines/services/components.
+
+Keep the project understandable enough for a capable 3rd-year B.Tech CSE student to explain and maintain.
+
+Do not introduce unnecessary enterprise complexity.
+
+============================================================
+PRODUCT VISION
+============================================================
+
+Mausam Setu should NOT behave like an ordinary weather dashboard.
+
+Core concept:
+
+ONE FORECAST
++
+DIFFERENT USERS
++
+DIFFERENT PRIORITIES
+=
+DIFFERENT DECISIONS
+
+The application should answer:
+
+“What does this weather mean for ME, and what should I do?”
+
+Core system concept:
+
+Weather Data
+↓
+Weather Risk
+↓
+User Context
+↓
+Safety
+↓
+Personalization
+↓
+Dynamic Homepage
+↓
+Actionable Recommendation
+↓
+Alerts / Voice / Notifications
+
+Final positioning:
+
+Mausam Setu
+“One Forecast. Different Users. Better Decisions.”
+
+Optional supporting description:
+
+“Personalized Weather Intelligence for Better Decisions.”
+
+============================================================
+DEVELOPMENT RULES
+============================================================
+
+1. Preserve all existing working features.
+
+2. Reuse current components/services/models.
+
+3. Do not blindly rewrite stable code.
+
+4. Run tests after every major modification.
+
+5. Fix regressions immediately.
+
+6. Never present fake/demo data as live.
+
+7. Clearly classify data as:
+
+LIVE
+CACHED
+ESTIMATED
+DEMO
+UNAVAILABLE
+COMMUNITY VERIFIED
+COMMUNITY UNVERIFIED
+
+8. Safety-critical logic should remain deterministic and explainable.
+
+9. Do not falsely claim that a trained ML model exists.
+
+10. If personalization is currently rule/scoring based, preserve and explain it honestly.
+
+============================================================
+PHASE 1 — COMPLETE CODE AUDIT
+============================================================
+
+Before major modifications, inspect the entire project.
+
+Identify:
+
+fully implemented features
+partial features
+demo-only features
+UI placeholders
+duplicate logic
+external APIs
+API-key requirements
+potential regression risks
+unused code
+current test coverage
+
+Create an internal gap analysis:
+
+Feature
+Current status
+Files/modules involved
+Required change
+External API?
+Risk
+Tests needed
+
+Do not stop after the audit.
+
+Proceed with implementation.
+
+============================================================
+PRESERVE ALL CURRENT FEATURES
+============================================================
+
+Keep all existing functionality including:
+
+Health persona
+Fitness persona
+Travel persona
+Family persona
+Agriculture persona
+Commute persona
+Marine/Coastal persona
+Events persona
+multi-interest personalization
+Today For You
+Why This For Me
+recommendation relevance ranking
+user sensitivities
+activity configuration
+
+Current weather
+temperature
+feels-like
+humidity
+rain
+precipitation
+wind speed
+wind direction
+pressure
+dew point
+visibility
+UV
+AQI
+PM2.5
+PM10
+sunrise
+sunset
+
+24-hour forecast
+7-day forecast
+weather advisories
+future-risk scanning
+data-source labels
+data freshness/status
+
+Fitness best-window finder
+school pickup/drop-off
+travel packing advice
+soil moisture
+planting calendar
+frost warning
+event planner
+journey planner
+METAR
+TAF
+marine conditions
+wave height
+wave period
+sea temperature
+tide integration framework
+saved locations
+recent locations
+GPS location
+worldwide location search
+India village/district/PIN search
+weather map
+weather map layers
+metric/imperial units
+Judge Mode
+offline support
+PWA
+SQLite/PostgreSQL
+backend cache
+rate limiting
+CORS
+security headers
+Providers Only mode
+privacy-first preferences
+
+============================================================
+1. COMPLETE BRANDING CHANGE — MAUSAM SETU
+============================================================
+
+Rename the user-facing application from:
+
+Mausam Personal
+
+to:
+
+Mausam Setu
+
+Use:
+
+Mausam Setu
+
+Primary tagline:
+
+“One Forecast. Different Users. Better Decisions.”
+
+Audit and update user-facing references in:
+
+sidebar
+header
+landing page
+onboarding
+browser title
+HTML title
+PWA manifest
+PWA install name
+PWA short name
+mobile metadata
+loading screen
+offline screen
+error screen
+Judge Mode
+Preferences
+About section
+README
+documentation
+site metadata
+footer
+project description
+
+Recommended browser title:
+
+Mausam Setu · Personalized Weather Intelligence
+
+Do not blindly rename compatibility-sensitive internal identifiers.
+
+Database tables
+migration IDs
+storage keys
+package IDs
+API routes
+environment variables
+
+may remain unchanged if renaming creates unnecessary risk.
+
+User-facing production branding MUST say Mausam Setu.
+
+The Voice Assistant may continue to be named:
+
+Ask Mausam
+
+============================================================
+2. TRUE DYNAMIC PERSONALIZED HOMEPAGE
+============================================================
+
+The current app personalizes recommendations but the main page structure must become truly dynamic.
+
+Create a homepage layout engine.
+
+The order and prominence of widgets should depend on:
+
+persona
+multiple selected interests
+weather
+risk
+official warning
+time
+location
+activity
+user plans
+sensitivities
+data freshness
+user preference weights
+
+Create a backend-friendly representation such as:
+
+homepage_layout = [
+  widget,
+  widget,
+  widget
+]
+
+Each widget should conceptually contain:
+
+widget_id
+widget_type
+priority
+title
+subtitle
+data
+reason
+severity
+source
+status
+last_updated
+expires_at
+actions
+
+Example Fitness:
+
+1 Official warning
+2 Best workout window
+3 Heat exposure
+4 AQI
+5 UV
+6 Hourly forecast
+7 Current weather
+
+Example Agriculture:
+
+1 Official warning
+2 Rain accumulation
+3 Soil moisture
+4 Crop guidance
+5 Frost/heat risk
+6 7-day forecast
+
+Example Travel:
+
+1 Destination warning
+2 Journey weather
+3 Packing guidance
+4 Destination forecast
+5 Airport weather
+6 Saved destinations
+
+Example Family:
+
+1 Severe warning
+2 School commute
+3 Pickup/drop-off weather
+4 AQI
+5 Temperature
+6 Daily forecast
+
+Persona switching should visibly rearrange the dashboard.
+
+Do not simply recolor the same layout.
+
+============================================================
+3. SAFETY OVERRIDE ENGINE
+============================================================
+
+Implement a safety layer above personalization.
+
+Priority architecture:
+
+OFFICIAL / CRITICAL SAFETY
+↓
+PERSONALIZATION
+↓
+GENERAL WEATHER
+
+If severe conditions exist, safety information must outrank normal personalized recommendations.
+
+Example:
+
+Normal fitness:
+Best running window 6–7 AM
+
+With severe thunderstorm:
+Severe Thunderstorm Warning becomes first.
+
+User preference must not suppress critical safety.
+
+============================================================
+4. EMERGENCY MODE
+============================================================
+
+Create a dedicated Emergency Mode.
+
+When critical conditions are active, simplify the dashboard.
+
+Example:
+
+🚨 RED ALERT
+
+Severe Thunderstorm
+Lucknow
+
+Expected:
+6:20 PM – 8:10 PM
+
+Conditions:
+Heavy rainfall
+Strong wind
+Lightning risk
+
+WHAT YOU SHOULD DO
+
+✓ Stay indoors
+✓ Avoid open fields
+✓ Avoid shelter beneath trees
+✓ Secure loose outdoor objects
+
+[Safety Map]
+[Emergency Contacts]
+[Share Alert]
+
+Possible triggers:
+
+extreme rainfall
+severe thunderstorm
+dangerous wind
+extreme heat
+dangerous AQI
+dense fog
+coastal hazard
+flooding
+other official severe warnings
+
+Recommendations must remain evidence-based.
+
+============================================================
+5. WEATHER RISK INDEX 0–100
+============================================================
+
+Create an explainable Weather Risk Score.
+
+Example:
+
+WEATHER RISK
+72 / 100
+HIGH
+
+Possible components:
+
+rain
+wind
+heat
+humidity
+visibility
+thunderstorm
+AQI
+UV
+official warning severity
+
+Example:
+
+Rain              20
+Wind              18
+Heat              12
+Visibility        14
+AQI                8
+---------------------
+Risk              72
+
+Centralize thresholds.
+
+Add tests.
+
+============================================================
+6. KEEP WEATHER RISK AND RELEVANCE SEPARATE
+============================================================
+
+A. Weather Risk
+
+“How dangerous are the conditions?”
+
+Example:
+
+72/100
+
+
+B. Personalized Relevance
+
+“How relevant is this recommendation to this user?”
+
+Example:
+
+Fitness 94/100
+Travel 61/100
+Agriculture 30/100
+
+Never merge these scores.
+
+============================================================
+7. DATA QUALITY / PROVENANCE SYSTEM
+============================================================
+
+Every important metric should support:
+
+source
+status
+last_updated
+confidence/quality
+expiration
+
+Status types:
+
+LIVE
+CACHED
+ESTIMATED
+DEMO
+UNAVAILABLE
+COMMUNITY VERIFIED
+COMMUNITY UNVERIFIED
+
+Example:
+
+Temperature
+Source: Open-Meteo
+Updated: 3 minutes ago
+Status: LIVE
+
+Never hide stale/fallback state.
+
+============================================================
+8. INDIA-FIRST PROVIDER ARCHITECTURE
+============================================================
+
+Keep current legitimate providers.
+
+Create integration-ready provider adapters for:
+
+IMD
+CPCB
+INCOIS
+ICAR
+NDMA
+
+Use only real accessible data.
+
+Potential use:
+
+IMD:
+warnings
+forecast
+rainfall
+heat alerts
+nowcast where available
+
+CPCB:
+Indian AQI / NAQI
+
+INCOIS:
+marine/coastal information
+
+ICAR:
+agriculture advisories
+
+Do NOT claim these are live unless actually integrated.
+
+Fallback concept:
+
+Official/Primary Provider
+↓
+Independent Secondary Provider
+↓
+Valid Cache
+↓
+Unavailable
+
+Demo data is NOT part of this fallback hierarchy.
+
+============================================================
+9. AQI CORRECTION
+============================================================
+
+If app uses US AQI, explicitly label:
+
+US AQI
+
+Do not simply display:
+
+AQI 130
+
+without scale.
+
+Prefer Indian AQI/NAQI when a legitimate source is available.
+
+Do not fake conversions.
+
+============================================================
+10. IMPROVE WHY THIS FOR ME
+============================================================
+
+Keep the current feature and improve it.
+
+Show:
+
+persona match
+activity
+weather condition
+time relevance
+location relevance
+severity
+source
+freshness
+rule triggered
+weather risk
+recommendation relevance
+user preference effect
+
+Example:
+
+WHY THIS FOR ME?
+
+✓ Fitness is selected
+✓ Running is selected
+✓ Preferred time is 6–9 AM
+✓ UV rises after 8 AM
+✓ Temperature is lower earlier
+✓ Rain probability is low
+
+============================================================
+11. EXPLAINABLE RULE ENGINE
+============================================================
+
+Keep logic traceable.
+
+Weather Telemetry
+↓
+Weather Risk
+↓
+Safety Rules
+↓
+Persona Rules
+↓
+Context
+↓
+Recommendation
+
+Rule metadata should support where practical:
+
+rule_id
+inputs
+thresholds
+severity
+output
+source/reference
+version
+
+Do not claim official endorsement.
+
+============================================================
+12. ENGLISH + HINDI INTERNATIONALIZATION
+============================================================
+
+Implement proper i18n.
+
+Minimum:
+
+English
+Hindi
+
+Use translation files.
+
+Example:
+
+/locales/en.json
+/locales/hi.json
+
+Avoid hardcoding user-facing English across components.
+
+Recommendation engine should ideally return semantic codes such as:
+
+HEAVY_RAIN_COMMUTE_WARNING
+
+Frontend translates them.
+
+Keep architecture ready for more Indian languages.
+
+============================================================
+13. ASK MAUSAM VOICE ASSISTANT
+============================================================
+
+Add:
+
+Ask Mausam
+
+Support:
+
+speech-to-text
+text-to-speech
+English
+Hindi
+
+Example queries:
+
+Kal baarish hogi?
+
+Kal morning running ke liye best time kya hai?
+
+College jaate waqt rain hogi?
+
+Delhi flight ke time visibility kaisi hogi?
+
+Voice must use actual weather/personalization data.
+
+No hallucinated weather.
+
+Pipeline:
+
+Speech
+↓
+Intent extraction
+↓
+Date/time
+↓
+Location/context
+↓
+Weather services
+↓
+Personalization engine
+↓
+Answer
+↓
+TTS
+
+Gracefully handle browsers without speech support.
+
+============================================================
+14. ACCESSIBILITY
+============================================================
+
+Add independent accessibility controls:
+
+Screen-reader optimized mode
+Read weather aloud
+Voice navigation
+Large text
+High contrast
+Reduced motion
+Strong visual warning mode
+Color-blind-safe severity indicators
+Keyboard navigation
+ARIA labels
+Visible focus states
+
+Do not create one generic “Disabled Mode”.
+
+Severity must not rely only on color.
+
+============================================================
+15. UI ALIGNMENT AND CLIPPING FIX
+============================================================
+
+There is a current UI bug around:
+
+Your Plans
+→ Customize my plans
+→ expand/settings controls
+→ Your activity session
+→ Pollen counts
+
+Problems include:
+
+icons touching/crossing the left border
+controls being partially clipped
+text starting too close to container edge
+nested cards not aligning perfectly
+inconsistent spacing
+possible overflow caused by sidebar/content sizing
+
+Fix the underlying layout system, not just one margin.
+
+Audit:
+
+negative margins
+translateX
+absolute positioning
+left offsets
+100vw inside main content
+fixed widths
+overflow:hidden
+grid sizing
+flex children missing min-width:0
+
+Use a consistent spacing system.
+
+Create reusable spacing tokens such as:
+
+--space-xs
+--space-sm
+--space-md
+--space-lg
+--space-xl
+
+Ensure:
+
+global box-sizing: border-box
+
+where appropriate.
+
+Use:
+
+min-width: 0
+
+where needed for flex/grid children.
+
+Prefer:
+
+repeat(2, minmax(0, 1fr))
+
+for equal responsive columns.
+
+All main cards should follow consistent:
+
+left/right padding
+top/bottom padding
+icon gaps
+heading alignment
+grid gaps
+
+The Customize my plans row should cleanly look like:
+
+[expand icon] [settings icon] [Customize my plans]
+
+No element should touch the border.
+
+Nested cards such as:
+
+Your activity session
+Pollen counts
+
+must align evenly.
+
+============================================================
+16. SIDEBAR / MAIN CONTENT WIDTH FIX
+============================================================
+
+The desktop sidebar already consumes viewport width.
+
+Ensure main content does not incorrectly use:
+
+width: 100vw
+
+inside the sidebar layout.
+
+Main content should size relative to its actual parent.
+
+Prevent horizontal clipping.
+
+============================================================
+17. RESPONSIVE ALIGNMENT TESTING
+============================================================
+
+Test at minimum:
+
+360px
+390px
+412px
+768px
+1024px
+1280px
+1366px
+1440px
+1536px
+1920px
+
+Verify:
+
+no clipped text
+no clipped icons
+no horizontal page scrollbar
+no cards outside parent
+no overlap
+responsive two-column stacking
+sidebar does not overlap main content
+focus outlines visible
+
+============================================================
+18. WEATHER MAP EXPLORER — AUTO LOAD
+============================================================
+
+Current Weather Map Explorer shows a placeholder with:
+
+“Explore the surrounding weather”
+
+and:
+
+“Load interactive map”
+
+REMOVE this extra user step.
+
+New behaviour:
+
+User clicks Weather Map
+
+↓
+
+Weather Map Explorer opens
+
+↓
+
+Interactive map automatically begins loading
+
+↓
+
+Map appears
+
+No normal “Load interactive map” button.
+
+============================================================
+19. WEATHER MAP PERFORMANCE / PRIVACY
+============================================================
+
+Do NOT load the external map when the main homepage initially loads.
+
+Only load it after the user intentionally opens Weather Map Explorer.
+
+This preserves:
+
+homepage performance
+privacy
+network usage
+
+If coordinates are sent to Windy/external provider, retain a concise privacy/provider notice.
+
+============================================================
+20. WEATHER MAP LOADING STATE
+============================================================
+
+Replace the large placeholder card with:
+
+Loading interactive weather map…
+
+plus a lightweight loader/skeleton.
+
+On success:
+
+show the actual map.
+
+On failure:
+
+Interactive weather map could not be loaded.
+
+[Retry]
+
+Retry should only appear after failure.
+
+============================================================
+21. WEATHER MAP LAYER BEHAVIOUR
+============================================================
+
+Preserve:
+
+Temperature
+Rainfall
+Wind
+Humidity
+Radar
+Satellite
+PM2.5
+
+Layer selection should update automatically.
+
+No reload button required.
+
+============================================================
+22. WEATHER MAP LOCATION CHANGE
+============================================================
+
+If user changes:
+
+Lucknow → Delhi
+
+while explorer is open:
+
+map should update/recenter automatically.
+
+No closing/reopening.
+
+No additional Load button.
+
+If selected location comes from GPS:
+
+reuse valid selected coordinates.
+
+Do not request GPS again unnecessarily.
+
+============================================================
+23. WEATHER MAP JUDGE MODE BEHAVIOUR
+============================================================
+
+Judge Mode must not fake Windy/external map data.
+
+Clearly state that map provider data is independent of Judge Mode scenario data.
+
+============================================================
+24. WEATHER MAP MODAL LAYOUT
+============================================================
+
+Desktop:
+
+Interactive map | Selected location details
+
+Mobile:
+
+Interactive map
+↓
+Location details
+
+Avoid unnecessary nested scrollbars.
+
+Use responsive map height.
+
+No horizontal overflow.
+
+============================================================
+25. PROVIDERS ONLY MODE
+============================================================
+
+Preserve and strengthen Providers Only Mode.
+
+When active:
+
+never use hidden demo data.
+
+If provider + valid cache fail:
+
+UNAVAILABLE
+
+Demo appears only in:
+
+Judge Mode
+or explicit Demo Mode
+
+============================================================
+26. MOBILE-FIRST PASS
+============================================================
+
+Prioritize mobile.
+
+Ensure:
+
+thumb-friendly actions
+large warning controls
+responsive cards
+clean hierarchy
+no excessive horizontal scrolling
+appropriate bottom navigation where useful
+PWA friendliness
+
+Desktop must remain good too.
+
+============================================================
+PART 1 TESTING
+============================================================
+
+Test:
+
+Weather Risk
+Safety override
+Dynamic homepage ordering
+Data status/provenance
+Demo/live separation
+AQI labels
+English/Hindi
+Voice fallback
+Providers Only
+UI alignment
+sidebar/content sizing
+responsive layout
+map automatic loading
+map error fallback
+map location change
+map layer switching
+existing personas
+
+Run:
+
+backend tests
+frontend tests
+production build
+
+Fix all regressions.
+
+============================================================
+PART 1 COMPLETION REPORT
+============================================================
+
+At completion report:
+
+IMPLEMENTED
+
+PARTIALLY IMPLEMENTED
+
+EXTERNAL DEPENDENCY / NOT CONFIGURED
+
+API KEYS REQUIRED
+
+TEST RESULTS
+
+BUILD RESULTS
+
+FILES CHANGED
+
+KNOWN LIMITATIONS
+
+CONFIRM EXISTING FEATURES STILL WORK
+
+Do not move into Part 2 features until Part 1 is stable.
+
+When complete, state:
+
+“Ready for PART 2 — Community Intelligence, Advanced Personas, Route Weather and Adaptive Personalization.”
