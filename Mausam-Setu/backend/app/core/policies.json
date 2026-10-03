@@ -1,0 +1,316 @@
+{
+  "thresholds": {
+    "heat": 35,
+    "cold": 10,
+    "uv": 6,
+    "rain": 60,
+    "heavy_rain_mm": 15,
+    "wind": 35,
+    "fog_m": 1000,
+    "aqi": 100,
+    "frost": 0
+  },
+  "weights": {
+    "interest": 25,
+    "weather": 25,
+    "time": 10,
+    "severity": 15,
+    "location": 5,
+    "activity": 10,
+    "freshness": 10
+  },
+  "window": {
+    "max_feels": 32,
+    "min_temp": 12,
+    "max_uv": 5,
+    "max_rain": 40,
+    "max_wind": 25,
+    "max_aqi": 100,
+    "min_visibility": 1500,
+    "max_humidity": 85,
+    "hours": 2
+  },
+  "alert_cooldown_seconds": 3600,
+  "personas": {
+    "health": {
+      "label": "Health",
+      "required": [
+        "temperature"
+      ],
+      "optional": [
+        "aqi",
+        "pm25",
+        "pm10",
+        "uv",
+        "pollen"
+      ],
+      "metrics": [
+        "aqi",
+        "uv",
+        "humidity"
+      ],
+      "rules": [
+        "exposure"
+      ],
+      "alerts": [
+        "heat",
+        "air",
+        "uv"
+      ],
+      "order": 1,
+      "explanation": "Environmental exposure for your health interests."
+    },
+    "fitness": {
+      "label": "Fitness",
+      "required": [
+        "temperature",
+        "rain_probability",
+        "wind"
+      ],
+      "optional": [
+        "aqi",
+        "visibility",
+        "uv"
+      ],
+      "metrics": [
+        "feels_like",
+        "uv",
+        "wind"
+      ],
+      "rules": [
+        "outdoor"
+      ],
+      "alerts": [
+        "heat",
+        "air"
+      ],
+      "order": 2,
+      "explanation": "Conditions during an outdoor activity."
+    },
+    "travel": {
+      "label": "Travel",
+      "required": [
+        "temperature"
+      ],
+      "optional": [
+        "rain_probability",
+        "uv",
+        "visibility"
+      ],
+      "metrics": [
+        "rain_probability",
+        "temperature",
+        "wind"
+      ],
+      "rules": [
+        "packing"
+      ],
+      "alerts": [
+        "rain",
+        "wind"
+      ],
+      "order": 3,
+      "explanation": "Weather-based preparation for your destination."
+    },
+    "family": {
+      "label": "Family",
+      "required": [
+        "temperature"
+      ],
+      "optional": [
+        "rain_probability",
+        "wind",
+        "visibility"
+      ],
+      "metrics": [
+        "rain_probability",
+        "temperature"
+      ],
+      "rules": [
+        "school"
+      ],
+      "alerts": [
+        "rain",
+        "heat"
+      ],
+      "order": 4,
+      "explanation": "Morning, afternoon and evening family plans."
+    },
+    "agriculture": {
+      "label": "Agriculture",
+      "required": [
+        "precipitation"
+      ],
+      "optional": [
+        "soil_moisture",
+        "humidity"
+      ],
+      "metrics": [
+        "precipitation",
+        "humidity",
+        "wind"
+      ],
+      "rules": [
+        "growing"
+      ],
+      "alerts": [
+        "rain",
+        "heat",
+        "frost"
+      ],
+      "order": 5,
+      "explanation": "Rainfall context for garden and field decisions."
+    },
+    "commute": {
+      "label": "Commute",
+      "required": [
+        "rain_probability"
+      ],
+      "optional": [
+        "visibility",
+        "wind"
+      ],
+      "metrics": [
+        "visibility",
+        "rain_probability",
+        "wind"
+      ],
+      "rules": [
+        "journey"
+      ],
+      "alerts": [
+        "fog",
+        "rain",
+        "wind"
+      ],
+      "order": 6,
+      "explanation": "Weather conditions along your departure window."
+    },
+    "marine": {
+      "label": "Marine",
+      "required": [
+        "wave_height"
+      ],
+      "optional": [
+        "wave_period",
+        "water_temperature"
+      ],
+      "metrics": [
+        "wave_height",
+        "wave_period",
+        "water_temperature"
+      ],
+      "rules": [
+        "coast"
+      ],
+      "alerts": [
+        "wind"
+      ],
+      "order": 7,
+      "explanation": "Coastal weather and separately sourced sea conditions."
+    },
+    "events": {
+      "label": "Events",
+      "required": [
+        "temperature",
+        "rain_probability"
+      ],
+      "optional": [
+        "uv",
+        "wind"
+      ],
+      "metrics": [
+        "rain_probability",
+        "wind",
+        "humidity"
+      ],
+      "rules": [
+        "planning"
+      ],
+      "alerts": [
+        "rain",
+        "wind",
+        "heat"
+      ],
+      "order": 8,
+      "explanation": "Forecast context for outdoor event planning."
+    },
+    "student": {
+      "rules": [
+        "student"
+      ]
+    },
+    "hill": {
+      "rules": [
+        "highland"
+      ]
+    }
+  },
+  "risk": {
+    "version": "1.0",
+    "horizon_hours": 6,
+    "freshness_seconds": 10800,
+    "components": {
+      "precipitation": {
+        "start": 1,
+        "full": 20,
+        "weight": 20,
+        "critical": 20,
+        "unit": "mm"
+      },
+      "wind": {
+        "start": 20,
+        "full": 70,
+        "weight": 20,
+        "critical": 70,
+        "unit": "km/h"
+      },
+      "temperature": {
+        "start": 30,
+        "full": 45,
+        "weight": 20,
+        "critical": 40,
+        "unit": "\u00b0C"
+      },
+      "humidity": {
+        "start": 70,
+        "full": 100,
+        "weight": 5,
+        "unit": "%"
+      },
+      "visibility": {
+        "start": 1500,
+        "full": 100,
+        "weight": 15,
+        "critical": 200,
+        "unit": "m",
+        "reverse": true
+      },
+      "aqi": {
+        "start": 50,
+        "full": 300,
+        "weight": 15,
+        "critical": 300,
+        "unit": "US AQI"
+      },
+      "uv": {
+        "start": 3,
+        "full": 11,
+        "weight": 5,
+        "unit": "index"
+      }
+    },
+    "storm_weight": 30,
+    "critical_storm_codes": [
+      95,
+      96,
+      99
+    ],
+    "critical_wave_height": 4,
+    "categories": {
+      "moderate": 25,
+      "high": 50,
+      "very_high": 75
+    }
+  }
+}
