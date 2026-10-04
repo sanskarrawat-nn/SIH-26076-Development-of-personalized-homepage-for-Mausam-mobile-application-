@@ -11,7 +11,7 @@ from app.utils.calculations import activity_window, total_rain
 @pytest.mark.parametrize(
     "scenario,persona,needle",
     [
-        ("heat", "fitness", "caution"),
+        ("heat_no_window", "fitness", "caution"),
         ("travel_rain", "travel", "umbrella"),
         ("rain", "family", "rain protection"),
         ("agriculture_rain", "agriculture", "18 mm"),

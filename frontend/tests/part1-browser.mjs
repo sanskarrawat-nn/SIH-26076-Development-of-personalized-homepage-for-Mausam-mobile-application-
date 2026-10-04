@@ -107,7 +107,7 @@ try {
   checks.push("Branding; no external map before explorer opens");
   await page.getByText("Customize my plans", { exact: true }).click();
   for (const width of widths) {
-    await page.setViewportSize({ width, height: 1050 });
+    await page.setViewportSize({ width, height: width === 360 ? 640 : 1050 });
     const issues = await page.evaluate(() => {
       const bad = [];
       if (document.documentElement.scrollWidth > innerWidth + 1)
@@ -181,7 +181,7 @@ try {
   );
   assert.equal(await page.getByRole("dialog").count(), 1);
   for (const width of widths) {
-    await page.setViewportSize({ width, height: 1050 });
+    await page.setViewportSize({ width, height: width === 360 ? 640 : 1050 });
     assert.equal(
       await page
         .getByRole("dialog")
@@ -233,7 +233,10 @@ try {
   const fitness = await page
     .locator(".dynamic-homepage > [data-widget]")
     .evaluateAll((ns) => ns.map((n) => n.dataset.widget));
-  await page.locator(".demo-steps button").nth(2).click();
+  await page
+    .locator(".demo-steps")
+    .getByRole("button", { name: /Agriculture/ })
+    .click();
   await page
     .getByRole("heading", { name: "Rainfall & your growing plans" })
     .waitFor();
@@ -299,11 +302,24 @@ try {
   );
   await page.getByRole("button", { name: "Close dialog" }).click();
   await page.getByRole("button", { name: "Ask Mausam", exact: true }).click();
+  await page.evaluate(() => {
+    Object.defineProperty(window, "speechSynthesis", {
+      value: undefined,
+      configurable: true,
+    });
+  });
   assert.equal(
     await page
       .getByRole("button", { name: "Use microphone", exact: true })
       .isDisabled(),
     true,
+  );
+  await page.getByRole("dialog").getByRole("textbox").fill("weather today");
+  await page.getByRole("button", { name: "Ask", exact: true }).click();
+  await page.getByRole("button", { name: "Read answer aloud" }).click();
+  assert.match(
+    await page.locator(".voice-answer").innerText(),
+    /Speech output is unavailable in this browser/,
   );
   await page.getByRole("dialog").getByRole("textbox").fill("open map");
   await page.getByRole("button", { name: "Ask", exact: true }).click();

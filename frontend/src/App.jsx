@@ -1,3 +1,4 @@
+const ENABLE_JUDGE_MODE = import.meta.env.VITE_ENABLE_JUDGE_MODE !== "false";
 import Community, { useCommunity, CommunityMap } from "./components/Community";
 import SavedPlans, { ScheduleExtras } from "./components/Part2Planning";
 import PrivacyControls from "./components/PrivacyControls";
@@ -267,14 +268,16 @@ export default function App() {
               <strong>{t("Your perspective.")}</strong>
             </p>
           </div>
-          <button
-            className={`nav-item ${judge ? "selected" : ""}`}
-            aria-pressed={judge}
-            onClick={() => setJudge(!judge)}
-          >
-            <FlaskConical size={19} />
-            {t("Judge Mode")}
-          </button>
+          {ENABLE_JUDGE_MODE && (
+            <button
+              className={`nav-item ${judge ? "selected" : ""}`}
+              aria-pressed={judge}
+              onClick={() => setJudge(!judge)}
+            >
+              <FlaskConical size={19} />
+              {t("Judge Mode")}
+            </button>
+          )}
           <button className="nav-item" onClick={() => setModal("settings")}>
             <Settings size={19} />
             {t("Preferences")}
@@ -315,14 +318,16 @@ export default function App() {
               {t("Accessibility")}
             </button>
             <AlertInbox data={data} onDetails={() => setModal("alerts")} />
-            <button
-              className={`judge-toggle ${judge ? "on" : ""}`}
-              aria-pressed={judge}
-              onClick={() => setJudge(!judge)}
-            >
-              <FlaskConical size={16} />
-              <span>{t("Judge Mode")}</span>
-            </button>
+            {ENABLE_JUDGE_MODE && (
+              <button
+                className={`judge-toggle ${judge ? "on" : ""}`}
+                aria-pressed={judge}
+                onClick={() => setJudge(!judge)}
+              >
+                <FlaskConical size={16} />
+                <span>{t("Judge Mode")}</span>
+              </button>
+            )}
             <button
               className="icon-btn"
               aria-label={t("Preferences")}
@@ -367,7 +372,11 @@ export default function App() {
               <ChevronDown size={17} />
             </button>
           </div>
-          <LiveClock timezone={effectiveLocation.timezone} />
+          <LiveClock
+            timezone={effectiveLocation.timezone}
+            simulated={judge || mode === "demo"}
+            referenceTime={data?.reference_time}
+          />
           {data && <WeatherGlance data={data} units={profile.units} />}
           {judge && (
             <JudgeMode
@@ -376,6 +385,7 @@ export default function App() {
               profile={profile}
               setProfile={setProfile}
               onReset={reset}
+              onAsk={() => setModal("ask")}
             />
           )}
           <InterestStrip profile={profile} setProfile={setProfile} />

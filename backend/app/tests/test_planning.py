@@ -333,3 +333,14 @@ def test_invalid_preferred_hours(client):
         ).status_code
         == 422
     )
+
+
+def test_heat_demo_window_and_separate_refusal():
+    warm = fixture(Location(), "heat")
+    result = fitness(warm, Planning())
+    assert warm.reference_time.hour == 12
+    assert warm.current.metrics["temperature"].value == 38
+    assert warm.current.metrics["uv"].value == 9
+    assert result["available"] and 5 <= result["start"].hour <= 7
+    assert not fitness(fixture(Location(), "heat_no_window"), Planning())["available"]
+    assert fixture(Location(), "heat").model_dump() == warm.model_dump()

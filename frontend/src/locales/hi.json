@@ -782,5 +782,7 @@
   "Current weather and risk": "वर्तमान मौसम और जोखिम",
   "View risk and data coverage": "जोखिम और डेटा की उपलब्धता देखें",
   "All factors and reasons": "सभी कारक और कारण",
-  "Windy receives selected coordinates and shows independent layers. Not simulated in Judge Mode. Coverage varies; PM2.5 is not US AQI.": "Windy को चुने हुए निर्देशांक भेजे जाते हैं और वह अपनी स्वतंत्र परतें दिखाता है। Judge Mode का काल्पनिक मौसम नक्शे पर लागू नहीं होता। उपलब्धता क्षेत्रानुसार बदलती है; PM2.5, US AQI नहीं है।"
+  "Windy receives selected coordinates and shows independent layers. Not simulated in Judge Mode. Coverage varies; PM2.5 is not US AQI.": "Windy को चुने हुए निर्देशांक भेजे जाते हैं और वह अपनी स्वतंत्र परतें दिखाता है। Judge Mode का काल्पनिक मौसम नक्शे पर लागू नहीं होता। उपलब्धता क्षेत्रानुसार बदलती है; PM2.5, US AQI नहीं है।",
+  "Simulated conditions": "काल्पनिक परिस्थितियाँ",
+  "Loading scenario…": "डेमो लोड हो रहा है…"
 }

@@ -134,6 +134,7 @@ SCENARIOS = {
 
 SCENARIOS.update(
     {
+        "heat_no_window": {**SCENARIOS["heat"], "label": "Extreme heat: no outdoor window"},
         "student_commute": {**SCENARIOS["rain"], "label": "Student Commute"},
         "hill_fog": {**SCENARIOS["fog"], "label": "Hill Fog"},
         "community_flood": {**SCENARIOS["rain"], "label": "Community Flood Report"},
@@ -149,7 +150,14 @@ SCENARIOS.update(
 
 def fixture(loc, scenario="pleasant"):
     base = SCENARIOS[scenario]
-    ref = datetime(2026, 6, 15, 6, 0, tzinfo=ZoneInfo(loc.timezone))
+    ref = datetime(
+        2026,
+        6,
+        15,
+        12 if scenario in ("heat", "heat_no_window") else 6,
+        0,
+        tzinfo=ZoneInfo(loc.timezone),
+    )
 
     def m(value, unit, t):
         return Metric(
@@ -181,8 +189,10 @@ def fixture(loc, scenario="pleasant"):
         vals["temperature"] = base["temperature"] + (0 if daytime else -5)
         vals["feels_like"] = vals["temperature"] + (3 if base["humidity"] >= 70 else 0)
         vals["uv"] = base["uv"] if daytime else 0
+        if scenario == "heat" and 5 <= t.hour <= 7:
+            vals.update(temperature=27, feels_like=29, humidity=55, uv=1)
         vals["pressure"] = 1004 if scenario in ("storm", "emergency") else 1012
-        vals["dew_point"] = vals["temperature"] - (100 - base["humidity"]) / 5
+        vals["dew_point"] = vals["temperature"] - (100 - vals["humidity"]) / 5
         vals["wind_direction"] = 225
         vals["wind_gusts"] = base["wind"] * 1.4
         if scenario in ("rain", "travel_rain") and 6 <= t.hour < 10:
@@ -215,7 +225,7 @@ def fixture(loc, scenario="pleasant"):
                 sunset=t.replace(hour=18, minute=55),
                 metrics={
                     "high": m(base["temperature"], "°C", t),
-                    "low": m(base["temperature"] - 5, "°C", t),
+                    "low": m(27 if scenario == "heat" else base["temperature"] - 5, "°C", t),
                     "rain_total": m(base["precipitation"] * 24, "mm", t),
                     "rain_probability": m(base["rain_probability"], "%", t),
                     "uv": m(base["uv"], "index", t),

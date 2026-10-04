@@ -1,8 +1,40 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { answerQuestion } from "../src/services/assistant.js";
+import { answerQuestion, speak } from "../src/services/assistant.js";
 import { setLanguage } from "../src/services/i18n.js";
 import { learnedWeights } from "../src/services/learning.js";
+
+test("speech output falls back when the browser API is missing or throws", () => {
+  const previous = Object.getOwnPropertyDescriptor(globalThis, "window");
+  try {
+    globalThis.window = { speechSynthesis: undefined };
+    assert.equal(speak("Weather advice"), false);
+    globalThis.window = {
+      speechSynthesis: {
+        cancel() {},
+        speak() {
+          throw new Error("Unavailable");
+        },
+      },
+    };
+    assert.equal(speak("Weather advice"), false);
+    window.SpeechSynthesisUtterance = class {
+      constructor(text) {
+        this.text = text;
+      }
+    };
+    assert.equal(speak("Weather advice"), false);
+    let spoken;
+    window.speechSynthesis.speak = (utterance) => {
+      spoken = utterance.text;
+    };
+    assert.equal(speak("Weather advice"), true);
+    assert.equal(spoken, "Weather advice");
+  } finally {
+    if (previous) Object.defineProperty(globalThis, "window", previous);
+    else delete globalThis.window;
+  }
+});
 
 test("Hindi tomorrow-morning query uses the specific day window, not today", () => {
   const data = {

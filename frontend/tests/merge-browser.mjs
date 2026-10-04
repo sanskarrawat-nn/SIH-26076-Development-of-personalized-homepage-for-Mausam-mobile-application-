@@ -1,3 +1,4 @@
+import assert from "node:assert/strict";
 import { fileURLToPath } from "node:url";
 import { chromium } from "@playwright/test";
 import { spawn } from "node:child_process";
@@ -76,6 +77,31 @@ try {
   await page.getByLabel("Weather scenario").selectOption("heat");
   await page.locator(".current-weather").waitFor();
   await page.locator(".live-clock time").waitFor();
+  assert.equal(
+    await page.locator(".live-clock time").getAttribute("datetime"),
+    "2026-06-15T06:30:00.000Z",
+  );
+  assert.match(
+    await page.locator(".live-clock").innerText(),
+    /DEMO \/ JUDGE MODE/,
+  );
+  await page.waitForTimeout(1200);
+  assert.equal(
+    await page.locator(".live-clock time").getAttribute("datetime"),
+    "2026-06-15T06:30:00.000Z",
+  );
+  await page.getByLabel("Weather scenario").selectOption("heat_no_window");
+  await page
+    .getByText(/Unable to determine a reliable outdoor window/)
+    .first()
+    .waitFor();
+  await page.getByLabel("Weather scenario").selectOption("heat");
+  await page
+    .getByRole("heading", { name: "A better window to head outside" })
+    .waitFor();
+  checks.push(
+    "Demo clock remains deterministic; heat offers a window and separate unsafe heat refuses",
+  );
   await page.getByRole("button", { name: /Advisory inbox,/ }).click();
   await page
     .getByRole("button", { name: "Mark all as read", exact: true })

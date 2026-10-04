@@ -1,162 +1,120 @@
 #!/usr/bin/env python3
-"""Enforce deliverable hygiene for Mausam Setu.
-
-Verifies:
-1. No secrets, .env files (except .env.example), or hardcoded API keys.
-2. No local SQLite database files (mausam.db, *.db).
-3. No dependency directories or build outputs in the archive or deliverable.
-4. AI prompt/request files are archived in docs/archive/ and not polluting docs/.
-5. .gitignore rules properly protect .env, databases, dependencies, and build outputs.
-"""
+"""Check tracked source and submission bytes; never reject an ignored local .env."""
 
 from __future__ import annotations
 
+import hashlib
 import re
+import subprocess
 import sys
 import zipfile
 from pathlib import Path
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
+# One-way fingerprints of previously exposed credentials, never plaintext.
+KNOWN_SECRET_HASHES = {
+    "fdfbc333dbcfaeda4dd3578ca4d05d83e80af7db8bd339a4ea5f26ad25ca1da2",
+    "9b1dc8c1c09a45414c164be7e2d6103a60684fb3140b303eefd779a2fb53632e",
+    "bb35df615a765240bb2afada5274e4929d5e58560950ce3a7cb38d314e29644c",
+}
+TOKEN = re.compile(rb"[A-Za-z0-9_-]{20,}")
+PRIVATE_KEY = re.compile(rb"-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----")
+ASSIGNMENT = re.compile(
+    r"(?im)^[ \t]*(?:[A-Z_]*(?:API_KEY|PASSWORD|SECRET|TOKEN))[ \t]*=[ \t]*([^\r\n#]+)"
+)
 
-LEAKED_SECRET_PATTERNS = [
-    re.compile(r"a4fa3424-d2cb-48d5-8455-b09f93979819"),
-    re.compile(r"tvvGfZ2Zol0PXhVHCWBwSBpemOsayzIM"),
-    re.compile(r"579b464db66ec23bdd0000018a8cb664c5a941706ad45b7c4af24051"),
-]
 
-PROMPT_FILES_TO_ARCHIVE = [
-    "BUILD-DIRECTIVE.txt",
-    "PART1-REQUEST.txt",
-    "PART2-REQUEST.txt",
-    "PART3-REQUEST.txt",
-    "PART3-UI-REQUEST.txt",
-    "PART1-FILES-CHANGED.txt",
-    "PART2-FILES-CHANGED.txt",
-    "PART3-FILES-CHANGED.txt",
-]
+def secret_errors(data: bytes, name: str) -> list[str]:
+    errors = []
+    if any(
+        hashlib.sha256(m.group()).hexdigest() in KNOWN_SECRET_HASHES
+        for m in TOKEN.finditer(data)
+    ):
+        errors.append(f"Known exposed credential in {name}")
+    if PRIVATE_KEY.search(data):
+        errors.append(f"Private key in {name}")
+    if Path(name).name.startswith(".env"):
+        for match in ASSIGNMENT.finditer(data.decode("utf-8", errors="replace")):
+            value = match.group(1).strip().strip("\"'")
+            if value and not any(
+                marker in value.lower()
+                for marker in ("your_", "replace", "placeholder", "example", "<")
+            ):
+                errors.append(f"Non-placeholder credential assignment in {name}")
+    return errors
 
 
 def check_source_hygiene() -> list[str]:
-    errors: list[str] = []
+    from make_submission_zip import forbidden_path
 
-    # 1. Check for forbidden .env files
-    for env_file in ROOT_DIR.glob("**/.env*"):
-        if ".venv" in env_file.parts or "venv" in env_file.parts or "node_modules" in env_file.parts:
-            continue
-        if env_file.name != ".env.example":
-            errors.append(f"Forbidden env file found: {env_file.relative_to(ROOT_DIR)}")
-
-    # 2. Check that .env.example exists and contains no actual secrets
-    env_example = ROOT_DIR / "backend" / ".env.example"
-    if not env_example.exists():
-        errors.append("backend/.env.example is missing")
-    else:
-        text = env_example.read_text(encoding="utf-8")
-        for key in ["WORLDTIDES_API_KEY", "TOMTOM_API_KEY", "CPCB_DATA_GOV_API_KEY", "COMMUNITY_REVIEW_TOKEN"]:
-            match = re.search(rf"^{key}\s*=\s*(\S+)", text, re.MULTILINE)
-            if match and match.group(1):
-                errors.append(f"backend/.env.example has non-empty secret for {key}: {match.group(1)}")
-
-    # 3. Check for local databases in tracked/working tree
-    for db_file in ROOT_DIR.glob("**/*.db"):
-        if ".venv" in db_file.parts or "venv" in db_file.parts or "node_modules" in db_file.parts:
-            continue
-        errors.append(f"Forbidden database file found: {db_file.relative_to(ROOT_DIR)}")
-
-    # 4. Check that AI prompt/request files are moved to docs/archive/
-    docs_dir = ROOT_DIR / "docs"
-    for prompt_file in PROMPT_FILES_TO_ARCHIVE:
-        unarchived = docs_dir / prompt_file
-        if unarchived.exists():
-            errors.append(f"AI prompt file must be moved to docs/archive/: docs/{prompt_file}")
-
-        archived = docs_dir / "archive" / prompt_file
-        if not archived.exists():
-            errors.append(f"Archived file missing: docs/archive/{prompt_file}")
-
-    # 5. Check .gitignore covers required patterns
-    gitignore_file = ROOT_DIR / ".gitignore"
-    if not gitignore_file.exists():
-        errors.append(".gitignore file missing")
-    else:
-        gi_text = gitignore_file.read_text(encoding="utf-8")
-        for expected in [".env", "node_modules", "dist", ".venv", "*.db", ".pytest_cache"]:
-            if expected not in gi_text:
-                errors.append(f".gitignore missing pattern for: {expected}")
-
-    # 6. Check for leaked secret signatures in source files
-    scan_exts = {".py", ".js", ".jsx", ".ts", ".tsx", ".json", ".md", ".html", ".sh", ".bat", ".yml", ".yaml"}
-    for path in ROOT_DIR.glob("**/*"):
-        if not path.is_file() or path.suffix not in scan_exts:
-            continue
-        if any(part in path.parts for part in [".venv", "venv", "node_modules", ".git", ".pytest_cache"]):
-            continue
-        if path.resolve() == Path(__file__).resolve():
-            continue
-
-        try:
-            content = path.read_text(encoding="utf-8", errors="ignore")
-        except Exception:
-            continue
-
-        for pat in LEAKED_SECRET_PATTERNS:
-            if pat.search(content):
-                errors.append(f"Found known secret signature in {path.relative_to(ROOT_DIR)}")
-
+    errors = []
+    tracked = (
+        subprocess.check_output(["git", "ls-files", "-z"], cwd=ROOT_DIR)
+        .decode()
+        .split("\0")
+    )
+    for name in filter(None, tracked):
+        path = ROOT_DIR / name
+        if not name.startswith("docs/qa/") and forbidden_path(Path(name)):
+            errors.append(f"Forbidden tracked path: {name}")
+        if path.is_file():
+            errors.extend(secret_errors(path.read_bytes(), name))
+    if not (ROOT_DIR / "backend/.env.example").is_file():
+        errors.append("Missing backend/.env.example")
+    required = [
+        ".env",
+        "backend/.env",
+        ".venv/probe",
+        "backend/.venv/probe",
+        "node_modules/probe",
+        "frontend/node_modules/probe",
+        "backend/a.db",
+        ".pytest_cache/probe",
+        "__pycache__/probe",
+        "frontend/dist/probe",
+        "build/probe",
+        "mausam-setu-submission.zip",
+    ]
+    for name in required:
+        if (
+            subprocess.run(
+                ["git", "check-ignore", "--no-index", "-q", name],
+                cwd=ROOT_DIR,
+                check=False,
+            ).returncode
+            != 0
+        ):
+            errors.append(f"Path is not ignored: {name}")
     return errors
 
 
 def check_zip_hygiene(zip_path: Path) -> list[str]:
-    errors: list[str] = []
-    if not zip_path.exists():
-        return [f"Submission zip does not exist at {zip_path}"]
+    from make_submission_zip import forbidden_path
 
-    size_mb = zip_path.stat().st_size / (1024 * 1024)
-    print(f"Checking zip: {zip_path.name} ({size_mb:.2f} MB)...")
-
-    forbidden_dirs = {".git", ".venv", "venv", "node_modules", "dist", ".pytest_cache", "__pycache__"}
-    with zipfile.ZipFile(zip_path, "r") as zf:
-        for info in zf.infolist():
-            path_str = info.filename
-            parts = path_str.split("/")
-
-            for fd in forbidden_dirs:
-                if fd in parts:
-                    errors.append(f"Zip contains forbidden directory '{fd}': {path_str}")
-
-            filename = parts[-1]
-            if (filename.startswith(".env") or filename == ".env") and not filename.endswith(".example"):
-                errors.append(f"Zip contains forbidden env file: {path_str}")
-
-            if filename.endswith(".db") or filename == "mausam.db":
-                errors.append(f"Zip contains forbidden database file: {path_str}")
-
-            if filename.endswith((".pyc", ".pyo")):
-                errors.append(f"Zip contains compiled bytecode: {path_str}")
-
+    errors = []
+    with zipfile.ZipFile(zip_path) as archive:
+        if archive.testzip():
+            errors.append("ZIP CRC validation failed")
+        for info in archive.infolist():
+            path = Path(info.filename)
+            if path.is_absolute() or ".." in path.parts or forbidden_path(path):
+                errors.append(f"Forbidden ZIP path: {info.filename}")
+            if not info.is_dir():
+                errors.extend(secret_errors(archive.read(info), info.filename))
     return errors
 
 
 def main() -> int:
-    print("Enforcing deliverable hygiene for Mausam Setu...")
-    source_errors = check_source_hygiene()
-    for err in source_errors:
-        print(f"  [SOURCE ERROR] {err}", file=sys.stderr)
-
-    zip_errors = []
-    submission_zip = ROOT_DIR / "mausam-setu-submission.zip"
-    if submission_zip.exists():
-        zip_errors = check_zip_hygiene(submission_zip)
-        for err in zip_errors:
-            print(f"  [ZIP ERROR] {err}", file=sys.stderr)
-
-    total_errors = len(source_errors) + len(zip_errors)
-    if total_errors > 0:
-        print(f"\nDeliverable hygiene check FAILED with {total_errors} error(s).", file=sys.stderr)
-        return 1
-
-    print("\nDeliverable hygiene check PASSED! Clean deliverable verified.")
-    return 0
+    errors = check_source_hygiene()
+    archive = ROOT_DIR / "mausam-setu-submission.zip"
+    if archive.exists():
+        errors.extend(check_zip_hygiene(archive))
+    for error in errors:
+        print(error, file=sys.stderr)
+    print(
+        f"Hygiene check: {len(errors)} error(s). Known-secret and path checks cannot prove absence of every possible credential."
+    )
+    return int(bool(errors))
 
 
 if __name__ == "__main__":

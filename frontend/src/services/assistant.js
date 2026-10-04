@@ -193,11 +193,19 @@ export function answerQuestion(query, data, profile) {
 }
 
 export function speak(text) {
-  if (typeof window === "undefined" || !("speechSynthesis" in window))
+  if (
+    typeof window === "undefined" ||
+    !window.speechSynthesis ||
+    typeof window.SpeechSynthesisUtterance !== "function"
+  )
     return false;
-  window.speechSynthesis.cancel();
-  const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = getLanguage() === "hi" ? "hi-IN" : "en-IN";
-  window.speechSynthesis.speak(utterance);
-  return true;
+  try {
+    window.speechSynthesis.cancel();
+    const utterance = new window.SpeechSynthesisUtterance(text);
+    utterance.lang = getLanguage() === "hi" ? "hi-IN" : "en-IN";
+    window.speechSynthesis.speak(utterance);
+    return true;
+  } catch {
+    return false;
+  }
 }

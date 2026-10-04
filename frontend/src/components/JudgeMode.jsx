@@ -13,6 +13,7 @@ export const SCENARIOS = {
   hindi_voice: "Hindi Voice Example",
   pleasant: "Pleasant day",
   heat: "Extreme heat",
+  heat_no_window: "Extreme heat: no outdoor window",
   rain: "Heavy rain",
   air: "Poor air quality",
   fog: "Foggy morning",
@@ -30,6 +31,7 @@ export default function JudgeMode({
   setProfile,
   profile,
   onReset,
+  onAsk,
 }) {
   return (
     <section className="judge-panel">
@@ -75,26 +77,26 @@ export default function JudgeMode({
           <span className="field-label">{t("60-second walkthrough")}</span>
           <div className="demo-steps">
             {[
-              ["fitness", "health"],
-              ["travel"],
-              ["agriculture"],
-              ["student"],
-              ["family"],
-            ].map((interests, i) => (
+              ["Fitness + Health", ["fitness", "health"], "heat"],
+              ["Agriculture", ["agriculture"], "agriculture_rain"],
+              ["Student", ["student"], "student_commute"],
+              ["Family", ["family"], "rain"],
+              ["Emergency Override", ["family"], "emergency"],
+              ["Hindi Ask Mausam", ["fitness", "health"], "hindi_voice"],
+            ].map(([label, interests, nextScenario], i) => (
               <button
-                key={i}
-                onClick={() => setProfile({ ...profile, interests })}
+                key={label}
+                onClick={() => {
+                  setProfile({ ...profile, interests });
+                  setScenario(nextScenario);
+                  if (nextScenario === "hindi_voice") {
+                    setLanguage("hi");
+                    onAsk();
+                  }
+                }}
               >
                 <span>{i + 1}</span>
-                {t(
-                  [
-                    "Fitness + Health",
-                    "Travel",
-                    "Agriculture",
-                    "Student",
-                    "Family",
-                  ][i],
-                )}
+                {t(label)}
               </button>
             ))}
           </div>

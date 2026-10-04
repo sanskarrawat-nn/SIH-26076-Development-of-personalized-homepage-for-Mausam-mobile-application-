@@ -87,13 +87,26 @@ try {
   await page.getByRole("button", { name: "Close dialog" }).click();
   checks.push("Judge mode, merged interests, window and ranking explanation");
   await page.getByLabel("Weather scenario").selectOption("travel_rain");
-  await page.locator(".demo-steps button").nth(1).click();
+  for (const name of ["Fitness", "Health"]) {
+    const button = page
+      .locator(".interest-strip")
+      .getByRole("button", { name, exact: true });
+    if ((await button.getAttribute("aria-pressed")) === "true")
+      await button.click();
+  }
+  await page
+    .locator(".interest-strip")
+    .getByRole("button", { name: "Travel", exact: true })
+    .click();
   await page.getByRole("heading", { name: /Packing for/ }).waitFor();
   if (!(await page.locator(".insight p").innerText()).includes("umbrella"))
     throw Error("Travel recommendation missing");
   checks.push("Travel rain generates umbrella recommendation");
   await page.getByLabel("Weather scenario").selectOption("agriculture_rain");
-  await page.locator(".demo-steps button").nth(2).click();
+  await page
+    .locator(".demo-steps")
+    .getByRole("button", { name: /Agriculture/ })
+    .click();
   await page
     .getByRole("heading", { name: "Rainfall & your growing plans" })
     .waitFor();

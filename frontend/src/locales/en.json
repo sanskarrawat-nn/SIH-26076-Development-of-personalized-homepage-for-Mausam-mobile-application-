@@ -782,5 +782,7 @@
   "Current weather and risk": "Current weather and risk",
   "View risk and data coverage": "View risk and data coverage",
   "All factors and reasons": "All factors and reasons",
-  "Windy receives selected coordinates and shows independent layers. Not simulated in Judge Mode. Coverage varies; PM2.5 is not US AQI.": "Windy receives selected coordinates and shows independent layers. Not simulated in Judge Mode. Coverage varies; PM2.5 is not US AQI."
+  "Windy receives selected coordinates and shows independent layers. Not simulated in Judge Mode. Coverage varies; PM2.5 is not US AQI.": "Windy receives selected coordinates and shows independent layers. Not simulated in Judge Mode. Coverage varies; PM2.5 is not US AQI.",
+  "Simulated conditions": "Simulated conditions",
+  "Loading scenario…": "Loading scenario…"
 }

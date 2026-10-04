@@ -124,7 +124,7 @@ try {
     assert.deepEqual(issues, [], label);
   }
   for (const width of widths) {
-    await page.setViewportSize({ width, height: 1050 });
+    await page.setViewportSize({ width, height: width === 360 ? 640 : 1050 });
     // Open every disclosure to inspect the largest form/content state.
     await page.evaluate(() =>
       document.querySelectorAll("main details").forEach((el) => {
@@ -162,7 +162,7 @@ try {
   await why.click();
   await page.getByRole("dialog").waitFor();
   for (const width of widths) {
-    await page.setViewportSize({ width, height: 1050 });
+    await page.setViewportSize({ width, height: width === 360 ? 640 : 1050 });
     await noOverflow(`Why ${width}`);
   }
   await page.keyboard.press("Escape");
@@ -174,7 +174,7 @@ try {
     /SIMULATED/,
   );
   for (const width of widths) {
-    await page.setViewportSize({ width, height: 1050 });
+    await page.setViewportSize({ width, height: width === 360 ? 640 : 1050 });
     await noOverflow(`Emergency ${width}`);
   }
   checks.push(

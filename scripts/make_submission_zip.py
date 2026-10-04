@@ -18,6 +18,15 @@ OUTPUT_ZIP = ROOT_DIR / "mausam-setu-submission.zip"
 
 FORBIDDEN_DIR_NAMES = {
     ".git",
+    "build",
+    ".ruff_cache",
+    ".cache",
+    ".mypy_cache",
+    ".idea",
+    ".vscode",
+    "coverage",
+    "tmp",
+    "temp",
     ".venv",
     "venv",
     "node_modules",
@@ -30,6 +39,11 @@ FORBIDDEN_DIR_NAMES = {
 
 FORBIDDEN_EXTENSIONS = {
     ".pyc",
+    ".log",
+    ".tmp",
+    ".bak",
+    ".sqlite",
+    ".sqlite3",
     ".pyo",
     ".db",
     ".db-journal",
@@ -52,9 +66,18 @@ def is_forbidden_file(file_path: Path) -> bool:
     if file_path.suffix in FORBIDDEN_EXTENSIONS:
         return True
     # Disallow any .env file except .env.example
-    if (name.startswith(".env") or name == ".env") and not name.endswith(".example"):
-        return True
-    return False
+    return name.startswith(".env") and name != ".env.example"
+
+
+def forbidden_path(path: Path) -> bool:
+    return (
+        ("docs" in path.parts and "qa" in path.parts)
+        or any(
+            part in FORBIDDEN_DIR_NAMES or part.startswith((".venv", "venv"))
+            for part in path.parts
+        )
+        or is_forbidden_file(path)
+    )
 
 
 def build_submission_zip(output_path: Path = OUTPUT_ZIP) -> Path:
@@ -75,14 +98,16 @@ def build_submission_zip(output_path: Path = OUTPUT_ZIP) -> Path:
             dirs[:] = [
                 d
                 for d in dirs
-                if d not in FORBIDDEN_DIR_NAMES
+                if not (root_path / d).is_symlink()
+                and not (root_path == ROOT_DIR / "docs" and d == "qa")
+                and d not in FORBIDDEN_DIR_NAMES
                 and not d.startswith(".venv")
                 and not d.startswith("venv")
             ]
 
             for file in files:
                 file_path = root_path / file
-                if is_forbidden_file(file_path):
+                if file_path.is_symlink() or is_forbidden_file(file_path):
                     continue
                 if file_path.resolve() == output_path.resolve():
                     continue
@@ -109,32 +134,18 @@ def build_submission_zip(output_path: Path = OUTPUT_ZIP) -> Path:
 
 
 def verify_archive(zip_path: Path) -> None:
-    print(f"Verifying archive hygiene: {zip_path.name}...")
-    with zipfile.ZipFile(zip_path, "r") as zf:
-        for info in zf.infolist():
-            path_str = info.filename
-            parts = path_str.split("/")
+    from check_clean_deliverable import check_zip_hygiene
 
-            # Check for forbidden dir names
-            for forbidden_dir in FORBIDDEN_DIR_NAMES:
-                if forbidden_dir in parts:
-                    raise ValueError(f"Forbidden directory '{forbidden_dir}' found in zip: {path_str}")
-
-            # Check for forbidden files
-            name = parts[-1]
-            if name in FORBIDDEN_EXACT_FILES:
-                raise ValueError(f"Forbidden file '{name}' found in zip: {path_str}")
-            if any(name.endswith(ext) for ext in FORBIDDEN_EXTENSIONS if ext != ".zip"):
-                raise ValueError(f"Forbidden extension found in zip: {path_str}")
-            if (name.startswith(".env") or name == ".env") and not name.endswith(".example"):
-                raise ValueError(f"Forbidden env file found in zip: {path_str}")
-
-    print("Archive verification passed! No secrets, databases, dependencies, or build output included.")
+    errors = check_zip_hygiene(zip_path)
+    if errors:
+        zip_path.unlink(missing_ok=True)
+        raise ValueError("; ".join(errors))
+    print("Archive path, CRC and known-secret checks passed.")
 
 
 if __name__ == "__main__":
     try:
         build_submission_zip()
-    except Exception as e:
+    except (OSError, ValueError, zipfile.BadZipFile) as e:
         print(f"Error building submission zip: {e}", file=sys.stderr)
         sys.exit(1)
